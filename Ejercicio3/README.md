@@ -1,68 +1,85 @@
 ## Descripción
-Clase base `Entrega` y dos subclases (`Bicicleta`, `EAutomovil`). Cada
-subclase sobrescribe `calcularCosto()` con `@Override`. Un arreglo `Entrega[]` guarda
-ambas modalidades y se recorre con un ciclo, sin preguntar el tipo con `if`.
-## Datos de prueba (ficticios)
-Bicicleta a Calle 123  (10km), 
-Automóvil a Avenida 456 (20 km)
-Bicicleta a Boulevard 789 (30 km)
- Las tarifas también son inventadas:
 
-- Bicicleta: 2.0 de cargo fijo + 0.5 por km.
-- Automóvil: 5.0 de cargo fijo + 1 por km.
-- Recargo por km extra (sobrecarga): 1 por km.
+Programa en Java que calcula el costo de entregas según su modalidad
+(bicicleta o automóvil). Se usa **herencia**, **sobrescritura** (`@Override`),
+**sobrecarga** y **polimorfismo**.
 
-## Salida del programa
+## Estructura del proyecto
+
+| Archivo | Qué hace |
+|---|---|
+| `Entrega.java` | Clase base. Guarda destino y distancia, valida los datos y tiene `calcularCosto()` y la sobrecarga `calcularCosto(double distanciaExtra)` |
+| `Bicicletas.java` | Subclase. Sobrescribe `calcularCosto()`: tarifa 2.0 + 0.5 por km |
+| `Automovil.java` | Subclase. Sobrescribe `calcularCosto()`: tarifa 5.0 + 1.0 por km |
+| `Main.java` | Guarda las entregas en un `Entrega[]`, las recorre con un `for` (sin `if`) e imprime los costos |
+
+## Cómo compilar y ejecutar
+
+Los cuatro archivos deben estar en la misma carpeta.
+
+```
+javac *.java
+java Main
+```
+
+## Conceptos aplicados
+
+- **Herencia:** `Bicicletas` y `Automovil` extienden `Entrega`.
+- **Sobrescritura:** cada subclase cambia `calcularCosto()` usando `@Override`.
+- **Sobrecarga:** `calcularCosto()` y `calcularCosto(double)` tienen el mismo
+  nombre pero distinta cantidad de parámetros.
+- **Polimorfismo:** un solo arreglo `Entrega[]` guarda bicicletas y automóviles,
+  y el ciclo llama `calcularCosto()` sin preguntar el tipo.
+
+## Resultado de la ejecución
 
 ```
 --- Costo de cada entrega ---
-Bicicleta a Centro (3.0 km): Bs 7.0
-Automovil a Aeropuerto (12.0 km): Bs 38.0
---- Con 2.0 km extra de recargo (sobrecarga) ---
-Bicicleta a Centro: Bs 10.0
-Automovil a Aeropuerto: Bs 41.0
---- Casos limite ---
-Bicicleta con 0.0 km extra: Bs 7.0
-Distancia rechazada: La distancia debe ser mayor que 0
-Recargo rechazado: Los km extra no pueden ser negativos
---- Reto: tipo estatico y dinamico ---
-Automovil a Parque: Bs 20.5
+BICICLETA a Calle 123 (10.0 km): 7.0
+AUTOMOVIL a Avenida 456 (20.0 km): 25.0
+BICICLETA a Boulevard 789 (30.0 km): 17.0
+--- Costo con 3 km de recargo ---
+BICICLETA a Calle 123: 10.0
+AUTOMOVIL a Avenida 456: 28.0
+BICICLETA a Boulevard 789: 20.0
+--- Casos de error ---
+Distancia rechazada: La distancia debe ser un número finito mayor a 0
+Recargo rechazado: La distancia extra debe ser un número finito mayor o igual a 0
+--- Reto: tipo estático y dinámico ---
+AUTOMOVIL a Parque: 10.0
 ```
 
-## Decisiones de diseño
-- `calcularCosto()` se sobrescribe en cada subclase con `@Override`. El costo es un
-  cargo fijo (se suma una vez) más un cargo por km (se multiplica por la distancia).
-- **Sobrecarga:** `calcularCosto(double kmExtra)` tiene el mismo nombre pero un
-  parámetro más (cambia el número de parámetros) y suma un recargo por cada km extra.
-- El ciclo no usa `if`: cada objeto ejecuta su propia versión del método.
-- `Entrega` valida la distancia en el constructor y lanza una excepción si no es
-  mayor que 0.
+## Evidencia (dos frases)
 
-## Explicación
-- Los métodos que puedo llamar los determina el **tipo estático**, es decir, el tipo
-  con el que se declara la variable (`Entrega`): solo puedo llamar a lo que existe
-  en esa clase.
-- La implementación sobrescrita que se ejecuta la determina el **tipo dinámico**, es
-  decir, el objeto real creado con `new`: en tiempo de ejecución Java elige la
-  versión de `EntregaBicicleta` o de `EntregaAutomovil`.
+1. El **tipo estático** (el tipo de la variable) determina qué métodos se pueden llamar.
+2. El **tipo dinámico** (el objeto real) determina qué implementación sobrescrita se ejecuta.
 
-## Reto: tipo estático y tipo dinámico
+## Reto: tipo estático vs tipo dinámico
 
-```
-Entrega e = new EntregaAutomovil("Parque", 5.0);
-
- variable e (tipo estático: Entrega)  ---->  objeto (tipo dinámico: EntregaAutomovil)
+```java
+Entrega a = new Automovil("Parque", 5.0);
 ```
 
-- **Tipo estático:** el tipo con el que se declara la variable. Lo decide el
-  compilador y limita qué métodos puedo llamar.
-- **Tipo dinámico:** el tipo del objeto real creado con `new`. Se decide al ejecutar
-  y determina qué versión sobrescrita se ejecuta.
+```
+   VARIABLE                         OBJETO
+┌──────────────┐               ┌─────────────────────┐
+│ Entrega a ───┼─────────────► │ Automovil           │
+└──────────────┘               │ destino = "Parque"  │
+  tipo estático                │ distancia = 5.0     │
+  (la etiqueta)                └─────────────────────┘
+                                 tipo dinámico
+                                 (el objeto real)
+```
 
-`e.calcularCosto()` devuelve 20.5, la versión del automóvil, aunque `e` esté declarada
-como `Entrega`.
+- **Tipo estático (`Entrega`):** lo que dice la declaración de la variable.
+  El compilador lo usa para saber qué métodos están permitidos.
+- **Tipo dinámico (`Automovil`):** el objeto que realmente se creó.
+  Al ejecutar, Java usa la versión de `calcularCosto()` de ese objeto,
+  por eso `a.calcularCosto()` da 10.0 (5.0 + 1.0 × 5 km).
 
-## Extensión creativa
-- **Categoría propuesta:** Easy
-- **Qué agregué:** validación de la distancia y de los km extra, y casos límite en `Main`.
-- **Cómo comprobé que funciona:** con la salida de arriba, que incluye los casos límite.
+## Validaciones
+
+- El destino no puede ser `null` ni estar vacío.
+- La distancia debe ser un número finito mayor a 0.
+- La distancia extra debe ser un número finito mayor o igual a 0.
+- Si algún dato es inválido se lanza `IllegalArgumentException`.

@@ -3,9 +3,11 @@ public class Entrega{
  private  String destino ;
  private double distancia ;
  public Entrega(String destino, double distancia) {
-     if (Double.isNaN(distancia) || Double.isInfinite(distancia)||distancia<=0) {
-         throw new IllegalArgumentException("La distancia no puede ser NaN o infinita");
-     }
+       if (destino == null || destino.isBlank()) {
+            throw new IllegalArgumentException("El destino no puede estar vacío");
+        }
+        if (Double.isNaN(distancia) || Double.isInfinite(distancia) || distancia <= 0) {
+        }
      this.destino=destino;
      this.distancia = distancia;
  }

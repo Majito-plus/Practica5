@@ -19,7 +19,7 @@ public class Main {
         + entregas[i].getDestino() +  
         "("+ entregas[i].getDistancia()+ "km) : el costos sera de: " + entregas[i].calcularCosto(3.0));
     }
-    System.out.println("CASOS");
+    System.out.println("CASOS DE ERROR ");
     System.out.println("Extra de 0.0 km extra en una bicicleta  "+ entregas[0].calcularCosto(0.0));
     try {
             Entrega mala = new Bicicletas("Plaza", 0.0);
@@ -33,11 +33,14 @@ public class Main {
         } catch (IllegalArgumentException e) {
             System.out.println("Recargo rechazado: " + e.getMessage());
         }
-        System.out.println(" ---- REto : tipo estatico y dinamico--- ");
-        Entrega a = new Automovil ("Parque", 5.0);
-         System.out.println(a.getModalidades() + " L:" 
-        + a.getDestino() +  
-        "("+ a.getDistancia()+ "km) : el costos sera de: " +  a.calcularCosto());
+       System.out.println("\n=== Reto: tipo estático vs dinámico ===");
+       System.out.println("--- Reto: tipo estático y dinámico ---");
+        Entrega a = new Automovil("Parque", 5.0);
+        System.out.println(a.getModalidades() + " a " + a.getDestino()
+                + ": " + a.calcularCosto());
+       System.out.println("--- Evidencia ---");
+        System.out.println("1) El tipo de la variable (estático) decide qué métodos puedo llamar.");
+        System.out.println("2) El tipo del objeto real (dinámico) decide qué versión sobrescrita se ejecuta.");
     
-    }
+}
 }

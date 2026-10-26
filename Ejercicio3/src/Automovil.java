@@ -8,6 +8,7 @@ public class Automovil extends Entrega{
     public String getModalidades(){
         return "AUTOMOVIL";
     }
+    @Override 
     public double calcularCosto(){
         return TARIFA + COSTO_POR_KM* getDistancia(); 
     }

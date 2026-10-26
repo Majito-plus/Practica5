@@ -2,7 +2,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // casos de prubea 
         CuentaDigital cuenta1 = new CuentaDigital("Juan Perez", "123456789", 400.0);
-        System.out.println("sus saldo es de "+ cuenta1.getSaldo());
+        System.out.println("su saldo es de "+ cuenta1.getSaldo());
         boolean p1=cuenta1.depositar(50);
         System.out.println("Deposito 50:" + p1 + " su saldo es de "+ cuenta1.getSaldo());
         boolean p2=cuenta1.retirar(200);   

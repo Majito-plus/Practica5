@@ -43,8 +43,8 @@ BICICLETA a Calle 123: 10.0
 AUTOMOVIL a Avenida 456: 28.0
 BICICLETA a Boulevard 789: 20.0
 --- Casos de error ---
-Distancia rechazada: La distancia debe ser un número finito mayor a 0
-Recargo rechazado: La distancia extra debe ser un número finito mayor o igual a 0
+Distancia rechazada: La distancia debe ser un numero  finito mayor a 0
+Recargo rechazado: La distancia extra debe ser un numero  finito mayor o igual a 0
 --- Reto: tipo estático y dinámico ---
 AUTOMOVIL a Parque: 10.0
 ```
@@ -80,6 +80,7 @@ Entrega a = new Automovil("Parque", 5.0);
 ## Validaciones
 
 - El destino no puede ser `null` ni estar vacío.
-- La distancia debe ser un número finito mayor a 0.
-- La distancia extra debe ser un número finito mayor o igual a 0.
+- La distancia debe ser un numero  finito mayor a 0.
+- La distancia extra debe ser un numero  finito mayor o igual a 0.
 - Si algún dato es inválido se lanza `IllegalArgumentException`.
+
